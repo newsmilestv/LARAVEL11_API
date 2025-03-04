@@ -2,3 +2,4 @@
 # TIME: 
 
 # STEP 1
+```php artisan install:api```
