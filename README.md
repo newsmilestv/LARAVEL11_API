@@ -1,5 +1,5 @@
 # LARAVEL_11_API
-# TIME: 
+# TIME: 06:26
 
 # STEP 1
 ```php artisan install:api```
