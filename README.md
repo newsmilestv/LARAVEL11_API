@@ -203,4 +203,6 @@ class PostResource extends JsonResource
         ]);
     }
 ```
-# STEP 15 
+# STEP 15 Add new route GET 127.0.0.1:8000/api/posts/1
+
+# STEP 16 
