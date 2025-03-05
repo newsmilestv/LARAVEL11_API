@@ -6,3 +6,6 @@
 
 # STEP 2 
 ```php artisan make:controller PostController --api```
+
+# STEP 3
+```php artisan make:model Post -m```
