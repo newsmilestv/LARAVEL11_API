@@ -131,4 +131,54 @@ class PostResource extends JsonResource
 
 ```
 
-# STEP 12
+# STEP 12 Change code in public function toArray(Request $request): array app/Http/Controllers/PostController.php
+```
+ /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request) 
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|min:3|max:255',
+            'body'  => 'required|string|min:5',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'All fields are required',
+                'errors'  => $validator->errors()
+            ], 422);            
+        }
+
+        $post = Post::create($request->all());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Message created successfully',
+            'data' => new PostResource($post)
+        ], 201);
+    }
+```
+
+# STEP 13 
+* Add this text into body
+```
+{
+  "title": "Second Post Title",
+  "body": "Second Post Body"
+}
+```
+* Answer
+```
+{
+  "status": true,
+  "message": "Message created successfully",
+  "data": {
+    "post_id": 2,
+    "post_title": "Second Post Title",
+    "post_body": "Second Post Body"
+  }
+}
+```
+# STEP 14

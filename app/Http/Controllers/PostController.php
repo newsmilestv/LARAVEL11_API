@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class PostController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Message created successfully',
-            'data' => $post
+            'data' => new PostResource($post)
         ], 201);
     }
 
