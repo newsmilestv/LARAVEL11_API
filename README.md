@@ -77,4 +77,20 @@ public function store(Request $request): JsonResponse
 # STEP 7 routes/api.php
 ```Route::apiResource('posts', PostController::class);```
 
-# STEP 8 
+# STEP 8 app/Models/Post.php
+```
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    protected string $table = 'posts';
+
+    protected array $fillable = ['title', 'body'];
+}
+
+```
+# STEP 10 
