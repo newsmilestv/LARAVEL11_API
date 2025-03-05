@@ -51,7 +51,19 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post = Post::find($id);
+        if (!$post) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Post Not Found!'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Post retrieved successfully!',
+            'data' => new PostResource($post)
+        ]);
     }
 
     /**
