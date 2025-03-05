@@ -14,6 +14,10 @@ class PostResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'post_id' => $this->id,
+            'post_title' => $this->title,
+            'post_body' => $this->body,
+        ];
     }
 }
