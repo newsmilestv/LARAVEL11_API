@@ -131,7 +131,7 @@ class PostResource extends JsonResource
 
 ```
 
-# STEP 12 Change code in public function toArray(Request $request): array app/Http/Controllers/PostController.php
+# STEP 12 Change code in public function toArray(Request $request): array; app/Http/Controllers/PostController.php
 ```
  /**
      * Store a newly created resource in storage.
@@ -181,4 +181,26 @@ class PostResource extends JsonResource
   }
 }
 ```
-# STEP 14
+# STEP 14 app/Http/Controllers/PostController.php
+```
+/**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $post = Post::find($id);
+        if (!$post) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Post Not Found!'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Post retrieved successfully!',
+            'data' => new PostResource($post)
+        ]);
+    }
+```
+# STEP 15 
