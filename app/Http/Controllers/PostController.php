@@ -16,7 +16,29 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        // $posts = Post::all();
+        // return response()->json([
+        //     'status'  => true,
+        //     'message' => 'Posts retrieved successfully!',
+        //     'data'    => PostResource::collection($posts)
+        // ], 200);
+
+        $posts = Post::paginate(5);
+        return response()->json([
+            'status' => true,
+            'message' => 'Posts retrieved successfully!',
+            'data' => [
+                'posts' => PostResource::collection($posts),
+                'pagination' => [
+                    'total' => $posts->total(),
+                    'per_page' => $posts->perPage(),
+                    'current_page' => $posts->currentPage(),
+                    'last_page' => $posts->lastPage(),
+                    'next_page_url' => $posts->nextPageUrl(),
+                    'prev_page_url' => $posts->previousPageUrl(),
+                ]
+            ]
+        ],200);
     }
 
     /**
@@ -71,7 +93,35 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|min:3|max:255',
+            'body' => 'required|string|min:5',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'All fields are required',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Post Not Found!'
+            ], 404);
+        }
+
+        $post->update($request->all());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Post updated successfully!',
+            'data' => new PostResource($post)
+        ], 200);
     }
 
     /**
@@ -79,6 +129,20 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Post Not Found!'
+            ], 404);
+        }
+
+        $post->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Post deleted successfully!',            
+        ]);
     }
 }
