@@ -33,16 +33,16 @@ class PostController extends Controller
                 'status'  => false,
                 'message' => 'All fields are required',
                 'errors'  => $validator->errors()
-            ], 422);
-
-            $post = Post::create($request->all());
-
-            return response()->json([
-                'status'  => true,
-                'message' => 'Message created successfully',
-                'data'    => $post
-            ], 201);
+            ], 422);            
         }
+
+        $post = Post::create($request->all());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Message created successfully',
+            'data' => $post
+        ], 201);
     }
 
     /**
