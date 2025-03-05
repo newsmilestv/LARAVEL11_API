@@ -87,10 +87,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected string $table = 'posts';
-
-    protected array $fillable = ['title', 'body'];
+   protected $fillable = ['title', 'body'];
 }
 
 ```
-# STEP 10 
+# STEP 10 Add POST Create(Store) Post JSON
+```127.0.0.1:8000/api/posts```
+
+* Add this text into body
+```
+{
+  "title": "First Post Title",
+  "body": "First Post Body"
+}
+```
+# STEP 11 Created Resource [app/Http/Resources/PostResource.php] created successfully.
+```php artisan make:resource PostResource```
+
+# STEP 12
