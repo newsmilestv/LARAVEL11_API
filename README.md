@@ -46,3 +46,35 @@ return new class extends Migration
 
 # STEP 5 
 ```php artisan migrate```
+
+# STEP 6 app/Http/Controllers/PostController.php
+
+```
+public function store(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|min:3|max:255',
+            'body'  => 'required|string|min:5',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'All fields are required',
+                'errors'  => $validator->errors()
+            ], 422);
+
+            $post = Post::create($request->all());
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Message created successfully',
+                'data'    => $post
+            ], 201);
+        }
+    }
+```
+# STEP 7 routes/api.php
+```Route::apiResource('posts', PostController::class);```
+
+# STEP 8 
